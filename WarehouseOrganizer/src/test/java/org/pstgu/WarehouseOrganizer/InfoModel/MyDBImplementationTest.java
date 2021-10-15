@@ -2,11 +2,14 @@ package org.pstgu.WarehouseOrganizer.InfoModel;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.SQLException;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
 class MyDBImplementationTest {
+
 	MyDB myDB = MyDBConnectionFactory.getConnection();
 
 	@Test
@@ -17,26 +20,33 @@ class MyDBImplementationTest {
 	}
 
 	@Test
-	@DisplayName("Test for getProduct(int id)")
-	void getProductTest() {
-
-		assertEquals(new Product("potato", "1kg"), myDB.getProduct("potato"), "not equal");
-		assertEquals(new Product("potato", "2kg"), myDB.getProduct("potato"), "not equal");
-	}
-
-	@Test
-	@DisplayName("Test for MyDB interface")
+	@DisplayName("Test for MyDB Product interface")
 	void myDBtest() {
-		String productName = "potato";
-		Product p = new Product(productName, "1kg");
-		myDB.addProduct(p);
-		assertEquals(p, myDB.getProduct(productName), "not equal");
-		myDB.deleleteProduct(productName);
+		Product[] products = { new Product("Картофель", "кг"), new Product("Сгущенка", "банка"),
+				new Product("Скумбрия", "консерва"), new Product("Сахар", "кг"),
+				new Product("Грецкие орехи", "пачка 300г"), new Product("Чай", "пачка 100 г"),
+				new Product("Соль", "пачка 1,5кг"), new Product("Капуста", "головка"), new Product("Яблоки", "шт"),
+				new Product("Кукуруза", "банка") };
 
-		myDB.addProduct(p);
-		myDB.editProduct(productName, new Product(productName, "5kg"));
+		for (Product product : products) {
+			myDB.addProduct(product);
+		}
+		System.out.println(myDB.getAllProducts());
 
-		assertEquals(new Product("potato", "5kg"), myDB.getProduct(productName), "not equal");
+		for (Product product : products) {
+			assertDoesNotThrow(() -> myDB.getProduct(product.getName()), "getProduct throws Exception");
+			Product p = null;
+			try {
+				p = myDB.deleteProduct(product.getName());
+			} catch (NotFoundException | SQLException e) {
+				e.printStackTrace();
+			} finally {
+				assertEquals(product, p, "not equal");
+			}
+		}
+
+		System.out.println(myDB.getAllProducts());
+
 	}
 
 }

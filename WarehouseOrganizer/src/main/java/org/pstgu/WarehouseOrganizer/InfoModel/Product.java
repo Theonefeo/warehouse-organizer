@@ -1,40 +1,27 @@
 package org.pstgu.WarehouseOrganizer.InfoModel;
 
-public class Product {
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 
+@EqualsAndHashCode(callSuper = false, exclude = { "id" })
+public @Data class Product {
+
+	private int id = -1;
+	@NonNull
 	private String name;
+	@NonNull
 	private String measureUnit;
 
-	public Product() {
-	}
-
-	public Product(String name, String measureUnit) {
+	public Product(int id, @NonNull String name, @NonNull String measureUnit) {
+		this.id = id;
 		this.name = name;
 		this.measureUnit = measureUnit;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		Product product = (Product) obj;
-		return this.name.equals(product.name) && this.measureUnit.equals(product.measureUnit);
-	}
-
-	/*
-	 * getters and setters
-	 */
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
+	public Product(@NonNull String name, @NonNull String measureUnit) {
 		this.name = name;
-	}
-
-	public String getMeasureUnit() {
-		return measureUnit;
-	}
-
-	public void setMeasureUnit(String measureUnit) {
 		this.measureUnit = measureUnit;
 	}
+
 }
