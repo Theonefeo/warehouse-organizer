@@ -28,5 +28,6 @@ local.properties
 */target/
 
 
-#doc
+doc
+src-delomboked
 #*~

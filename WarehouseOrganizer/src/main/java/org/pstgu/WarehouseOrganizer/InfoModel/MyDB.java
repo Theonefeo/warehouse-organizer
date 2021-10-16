@@ -3,6 +3,11 @@ package org.pstgu.WarehouseOrganizer.InfoModel;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Интерфейс хранения модели в БД
+ * @author feodor
+ *
+ */
 public interface MyDB {
 	
 	public boolean addProduct(String name, String measureUnit);

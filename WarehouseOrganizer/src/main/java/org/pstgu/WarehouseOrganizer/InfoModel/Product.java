@@ -23,5 +23,13 @@ public @Data class Product {
 		this.name = name;
 		this.measureUnit = measureUnit;
 	}
+	
+	/**
+	 * 
+	 * @return String[] {id, name, measureUnit}
+	 */
+	public String [] getStatate() {
+		return new String[] {Integer.toString(id), name, measureUnit};
+	}
 
 }
